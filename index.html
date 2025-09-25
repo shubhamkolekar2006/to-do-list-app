@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-container {
+            display: flex;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        #task-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #task-input:focus {
+            border-color: #667eea;
+        }
+
+        #add-task-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        #add-task-btn:hover {
+            background: #5a6fd8;
+        }
+
+        #task-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        #task-list li {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #task-list li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #task-list li.completed {
+            background: #e8f5e8;
+            opacity: 0.7;
+        }
+
+        #task-list li.completed .task-text {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .task-text {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .complete-btn, .delete-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .complete-btn {
+            color: #28a745;
+        }
+
+        .complete-btn:hover {
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        .delete-btn {
+            color: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .empty-image {
+            text-align: center;
+            padding: 30px 0;
+            color: #999;
+        }
+
+        .empty-image i {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .arrow-function-demo {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .arrow-function-demo h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <p class="subtitle">A practical example of arrow functions in JavaScript</p>
+        
+        <div class="input-container">
+            <input type="text" id="task-input" placeholder="Enter a new task...">
+            <button id="add-task-btn">Add Task</button>
+        </div>
+        
+        <ul id="task-list"></ul>
+        
+        <div class="empty-image">
+            <i class="fas fa-clipboard-list"></i>
+            <p>No tasks yet. Add a task to get started!</p>
+        </div>
+        
+        <div class="arrow-function-demo">
+            <h3>Arrow Functions in Action</h3>
+            <p>This app uses arrow functions for event handlers and callbacks:</p>
+            <div class="code-example">
+                // Arrow function example from this app:<br>
+                addTaskBtn.addEventListener('click', (event) => {<br>
+                &nbsp;&nbsp;addTask(event);<br>
+                });
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Tasks are saved in your browser's local storage</p>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the page to load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get HTML elements using arrow function style
+            const getElement = (id) => document.getElementById(id);
+            
+            const taskInput = getElement('task-input');
+            const addTaskBtn = getElement('add-task-btn');
+            const taskList = getElement('task-list');
+            const emptyImage = document.querySelector('.empty-image');
+            
+            // Load tasks when page loads
+            loadTasks();
+            
+            // Arrow function to add a new task
+            const addTask = (event) => {
+                event.preventDefault();
+                const taskText = taskInput.value.trim();
+                
+                // If empty input, do nothing (using arrow function with condition)
+                if (!taskText) return;
+                
+                // Create task element using arrow function
+                const createTaskElement = (text) => {
+                    const li = document.createElement('li');
+                    
+                    // Task text
+                    const taskSpan = document.createElement('span');
+                    taskSpan.textContent = text;
+                    taskSpan.className = 'task-text';
+                    
+                    // Task actions
+                    const taskActions = document.createElement('div');
+                    taskActions.className = 'task-actions';
+                    
+                    // Complete button with arrow function event handler
+                    const completeBtn = document.createElement('button');
+                    completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    completeBtn.className = 'complete-btn';
+                    completeBtn.addEventListener('click', () => {
+                        li.classList.toggle('completed');
+                        saveTasks();
+                    });
+                    
+                    // Delete button with arrow function event handler
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.addEventListener('click', () => {
+                        li.remove();
+                        updateEmptyState();
+                        saveTasks();
+                    });
+                    
+                    // Append everything
+                    taskActions.appendChild(completeBtn);
+                    taskActions.appendChild(deleteBtn);
+                    li.appendChild(taskSpan);
+                    li.appendChild(taskActions);
+                    
+                    return li;
+                };
+                
+                const newTask = createTaskElement(taskText);
+                taskList.appendChild(newTask);
+                
+                // Clear input
+                taskInput.value = '';
+                
+                // Update empty state and save tasks
+                updateEmptyState();
+                saveTasks();
+            };
+            
+            // Arrow function to update empty state
+            const updateEmptyState = () => {
+                // Using arrow function with ternary operator
+                taskList.children.length === 0 
+                    ? emptyImage.classList.remove('hidden')
+                    : emptyImage.classList.add('hidden');
+            };
+            
+            // Arrow function to save tasks to localStorage
+            const saveTasks = () => {
+                // Using arrow function with map
+                const tasks = Array.from(taskList.children).map(taskItem => ({
+                    text: taskItem.querySelector('.task-text').textContent,
+                    completed: taskItem.classList.contains('completed')
+                }));
+                
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            };
+            
+            // Arrow function to load tasks from localStorage
+            const loadTasks = () => {
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                
+                // Using arrow function with forEach
+                tasks.forEach(task => {
+                    const li = document.createElement('li');
+                    
+                    if (task.completed) {
+                        li.classList.add('completed');
+                    }
+                    
+                    const taskSpan = document.createElement('span');
+                    taskSpan.textContent = task.text;
+                    taskSpan.className = 'task-text';
+                    
+                    const taskActions = document.createElement('div');
+                    taskActions.className = 'task-actions';
+                    
+                    // Complete button with arrow function
+                    const completeBtn = document.createElement('button');
+                    completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    completeBtn.className = 'complete-btn';
+                    completeBtn.addEventListener('click', () => {
+                        li.classList.toggle('completed');
+                        saveTasks();
+                    });
+                    
+                    // Delete button with arrow function
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.addEventListener('click', () => {
+                        li.remove();
+                        updateEmptyState();
+                        saveTasks();
+                    });
+                    
+                    taskActions.appendChild(completeBtn);
+                    taskActions.appendChild(deleteBtn);
+                    li.appendChild(taskSpan);
+                    li.appendChild(taskActions);
+                    taskList.appendChild(li);
+                });
+                
+                updateEmptyState();
+            };
+            
+            // Event listeners with arrow functions
+            addTaskBtn.addEventListener('click', (event) => addTask(event));
+            
+            taskInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addTask(e);
+            });
+            
+            // Demonstration of different arrow function syntaxes
+            const demonstrateArrowFunctions = () => {
+                // No parameters
+                const sayHello = () => "Hello!";
+                
+                // One parameter (parentheses optional)
+                const double = n => n * 2;
+                
+                // Multiple parameters
+                const multiply = (a, b) => a * b;
+                
+                // Multiple lines
+                const calculate = (a, b) => {
+                    const sum = a + b;
+                    const product = a * b;
+                    return sum + product;
+                };
+                
+                console.log("Arrow Function Examples:");
+                console.log("sayHello():", sayHello());
+                console.log("double(5):", double(5));
+                console.log("multiply(3, 4):", multiply(3, 4));
+                console.log("calculate(2, 3):", calculate(2, 3));
+            };
+            
+            // Uncomment to see arrow function examples in console
+            // demonstrateArrowFunctions();
+        });
+    </script>
+</body>
+</html>
