@@ -2,202 +2,215 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: "Arial", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 0 20px;
-    min-height: 100vh;
-}
-
-.todo-app {
-    width: 100%;
-    max-width: 400px;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 30px;
-    color: #333;
-    border-radius: 20px;
+    background: white;
+    border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
 }
 
-.todo-app h1 {
-    font-size: 2rem;
-    color: #4a4a4a;
+h1 {
     text-align: center;
-    margin-bottom: 10px;
-}
-
-.input-area {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.input-area input {
-    flex: 1;
-    padding: 12px 17px;
-    font-size: 1.1rem;
-    border: none;
-    outline: none;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.9);
     color: #333;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    font-size: 28px;
 }
 
-.input-area input::placeholder {
-    color: #999;
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
 }
 
-.input-area button {
+.input-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 10px;
-    padding: 12px;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 1.1rem;
-    background: #5d93ff;
+    margin-bottom: 30px;
+    gap: 10px;
+}
+
+#task-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#task-input:focus {
+    border-color: #667eea;
+}
+
+#add-task-btn {
+    background: #667eea;
+    color: white;
     border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 10px rgba(93, 147, 255, 0.3);
-    width: 45px;
-    height: 45px;
+    font-size: 16px;
+    transition: background 0.3s;
 }
 
-.input-area button:hover {
-    transform: scale(1.05);
-    background: #4a7dff;
-}
-
-.todos-container {
-    width: 100%;
-    position: relative;
-    min-height: 200px;
-}
-
-.empty-image {
-    display: block;
-    width: 200px;
-    margin: 20px auto;
-    opacity: 0.7;
+#add-task-btn:hover {
+    background: #5a6fd8;
 }
 
 #task-list {
-    width: 100%;
     list-style: none;
+    margin-bottom: 20px;
 }
 
 #task-list li {
+    background: #f8f9fa;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
-    margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    border-left: 4px solid #5d93ff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 4px solid #667eea;
 }
 
 #task-list li:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #task-list li.completed {
-    text-decoration: line-through;
-    opacity: 0.6;
-    background: rgba(240, 240, 240, 0.8);
+    background: #e8f5e8;
+    opacity: 0.7;
     border-left-color: #51cf66;
 }
 
+#task-list li.completed .task-text {
+    text-decoration: line-through;
+    color: #666;
+}
+
 .task-text {
-    flex: 1;
+    font-size: 16px;
+    color: #333;
     cursor: pointer;
     word-break: break-word;
     padding-right: 10px;
+    flex: 1;
 }
 
 .task-actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
-.task-actions button {
+.complete-btn,
+.delete-btn {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.2s ease;
+    font-size: 16px;
     padding: 5px;
     border-radius: 4px;
-}
-
-.delete-btn {
-    color: #ff6b6b;
-}
-
-.delete-btn:hover {
-    color: #ff5252;
-    background: rgba(255, 107, 107, 0.1);
-    transform: scale(1.1);
+    transition: all 0.2s ease;
 }
 
 .complete-btn {
-    color: #51cf66;
+    color: #28a745;
 }
 
 .complete-btn:hover {
-    color: #40c057;
-    background: rgba(81, 207, 102, 0.1);
+    background: rgba(40, 167, 69, 0.1);
     transform: scale(1.1);
+}
+
+.delete-btn {
+    color: #dc3545;
+}
+
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.1);
+    transform: scale(1.1);
+}
+
+.empty-image {
+    text-align: center;
+    padding: 30px 0;
+    color: #999;
+}
+
+.empty-image i {
+    font-size: 60px;
+    margin-bottom: 15px;
+    color: #ccc;
 }
 
 .hidden {
     display: none;
 }
 
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 12px;
+}
+
+.arrow-function-demo {
+    background: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.arrow-function-demo h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.code-example {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    margin: 10px 0;
+    overflow-x: auto;
+}
+
 @media (max-width: 480px) {
-    .todo-app {
-        padding: 1.5rem;
+    .container {
+        padding: 20px;
     }
 
-    .todo-app h1 {
-        font-size: 1.7rem;
+    h1 {
+        font-size: 24px;
     }
 
-    .input-area input {
+    #task-input {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    #add-task-btn {
         padding: 10px 15px;
-        font-size: 1rem;
-    }
-
-    .empty-image {
-        width: 150px;
+        font-size: 14px;
     }
 }
